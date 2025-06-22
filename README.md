@@ -2,7 +2,7 @@
 
 A classic game of Tic Tac Toe written in python using tkinter.
 
-# Preview
+<p align="center"> Preview </p>
 
 <p align="center">
   <img src="public/demo1.png" alt="Demo 1" width="250"/>
