@@ -1,4 +1,4 @@
-from src.ui.ui import TicTacToeUI
+from src.ui.core import TicTacToeUI
 
 if __name__ == "__main__":
     TicTacToeUI()

@@ -27,10 +27,10 @@ Requirements:
 
 ## Possible improvements
 
-1. Play against the computer.
+1. Play against the computer. (Pending)
 2. Select initial player. (Completed)
 3. Puntuation system. (Completed)
-4. Visual style personalization.
+4. Visual style personalization (Completed).
 
 All improvements are welcome!
 

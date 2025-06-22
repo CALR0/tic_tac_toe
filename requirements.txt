@@ -1,0 +1,15 @@
+# Requisitos para el proyecto Tic Tac Toe Modern Edition
+# Este proyecto utiliza principalmente la biblioteca estándar de Python
+
+# Bibliotecas estándar utilizadas:
+# - tkinter (interfaz gráfica)
+# - time (temporización y animaciones)
+# - messagebox (diálogos)
+
+# No se requieren dependencias externas adicionales
+# El proyecto funciona con Python 3.6+
+
+# Para desarrollo (opcional):
+# pylint>=2.0.0  # Linting del código
+# black>=20.0.0  # Formateo del código
+# mypy>=0.800    # Verificación de tipos
