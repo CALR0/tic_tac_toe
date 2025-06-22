@@ -41,9 +41,11 @@ Requirements:
 3. Puntuation system. (Completed)
 4. Visual style personalization (Completed).
 
-# First version release
+## First version release
 
-I released the V1 for this project, download it from the releases section.
+I released the V1 for this project on Windows, download it from the releases section.
+
+Check here: https://github.com/CALR0/tic_tac_toe/releases/tag/TicTacToe
 
 All improvements are welcome!
 
