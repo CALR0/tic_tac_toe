@@ -2,6 +2,15 @@
 
 A classic game of Tic Tac Toe written in python using tkinter.
 
+# Preview
+
+<p align="center">
+  <img src="public/demo1.png" alt="Demo 1" width="600"/>
+</p>
+<p align="center">
+  <img src="public/demo2.png" alt="Demo 2" width="600"/>
+</p>
+
 ## How to play
 
 This is a two player game. You can play against another player:
