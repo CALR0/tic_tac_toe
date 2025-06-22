@@ -41,5 +41,9 @@ Requirements:
 3. Puntuation system. (Completed)
 4. Visual style personalization (Completed).
 
+# First version release
+
+I released the V1 for this project, download it from the releases section.
+
 All improvements are welcome!
 
