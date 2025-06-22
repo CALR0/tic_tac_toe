@@ -23,11 +23,13 @@ This is a two player game. You can play against another player:
 
 ## How to run
 
-To run the game, you can use the following command:
+To run the game, you can use the following command on the terminal:
 
 ```
 python main.py
 ```
+
+Ensure you are located in the project directory.
 
 Requirements:
 
