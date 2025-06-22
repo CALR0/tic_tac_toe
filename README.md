@@ -36,7 +36,7 @@ Requirements:
 
 ## Possible improvements
 
-1. Play against the computer. (Pending)
+1. Play against the computer. (Completed)
 2. Select initial player. (Completed)
 3. Puntuation system. (Completed)
 4. Visual style personalization (Completed).
