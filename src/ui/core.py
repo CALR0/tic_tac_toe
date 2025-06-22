@@ -17,7 +17,13 @@ class TicTacToeUI:
         self._create_menu()
         self._create_ui()
         self.show_player_selection_window()
+        # Defer AI's first move if needed after mainloop starts
+        # self.window.after(300, self._maybe_start_ai_first)
         self.window.mainloop()
+
+    def _maybe_start_ai_first(self):
+        if hasattr(self, 'game_mode') and self.game_mode == 'ai' and self.current_player == 'O' and not self.game_over:
+            self.ai_move()
 
     def _setup_main_window(self):
         # Use the theme's bg_primary color from settings for initial background
@@ -48,6 +54,7 @@ class TicTacToeUI:
         self.current_player = None
         self.game_over = False
         self.winning_line = []
+        self.game_mode = 'pvp'  # Default to Player vs Player
 
     def _create_menu(self):
         menubar = tk.Menu(self.window)
@@ -237,6 +244,7 @@ class TicTacToeUI:
                 relief='sunken',
                 state='disabled'
             )
+            from src.game_logic.game_logic import check_winner, is_draw
             if check_winner(self.board, self.current_player):
                 self.game_over = True
                 self.games_played += 1
@@ -255,6 +263,9 @@ class TicTacToeUI:
             else:
                 self.current_player = "O" if self.current_player == "X" else "X"
                 self.update_turn_display()
+                # If playing vs AI and it's AI's turn, trigger AI move
+                if hasattr(self, 'game_mode') and self.game_mode == 'ai' and self.current_player == getattr(self, 'ai_symbol', None):
+                    self.window.after(400, self.ai_move)
 
     def highlight_winning_line(self):
         player = self.current_player
@@ -335,7 +346,7 @@ class TicTacToeUI:
         selection_window.configure(bg=self.colors['bg_primary'])
         selection_window.resizable(False, False)
         selection_window.grab_set()
-        width, height = 260, 220  # More compact and square
+        width, height = 300, 300  # Slightly taller for AI option
         x = (selection_window.winfo_screenwidth() // 2) - (width // 2)
         y = (selection_window.winfo_screenheight() // 2) - (height // 2)
         selection_window.geometry(f'{width}x{height}+{x}+{y}')
@@ -357,18 +368,47 @@ class TicTacToeUI:
             fg=self.colors['text_secondary']
         )
         desc_label.pack(pady=(0, 10))
+        # Game mode selection
+        mode_var = tk.StringVar(value='pvp')
+        mode_frame = tk.Frame(main_frame, bg=self.colors['bg_primary'])
+        mode_frame.pack(pady=(0, 10))
+        tk.Radiobutton(
+            mode_frame, text="Player vs Player", variable=mode_var, value='pvp',
+            font=self.fonts['small'], bg=self.colors['bg_primary'], fg=self.colors['text_primary'],
+            selectcolor=self.colors['bg_card'], activebackground=self.colors['bg_card']
+        ).pack(side='left', padx=8)
+        tk.Radiobutton(
+            mode_frame, text="Player vs AI", variable=mode_var, value='ai',
+            font=self.fonts['small'], bg=self.colors['bg_primary'], fg=self.colors['text_primary'],
+            selectcolor=self.colors['bg_card'], activebackground=self.colors['bg_card']
+        ).pack(side='left', padx=8)
         def set_player(player):
-            self.current_player = player
+            self.game_mode = mode_var.get()
+            # Set which symbol is the AI and which is the human
+            if self.game_mode == 'ai':
+                self.ai_symbol = 'O' if player == 'X' else 'X'
+                self.human_symbol = player
+                # If AI starts, set current_player to AI and trigger AI move
+                if player == self.ai_symbol:
+                    self.current_player = self.ai_symbol
+                else:
+                    self.current_player = self.human_symbol
+            else:
+                self.ai_symbol = None
+                self.human_symbol = None
+                self.current_player = player
             self.update_turn_display()
             self.window.deiconify()
             selection_window.destroy()
             self.animate_start()
+            # If AI starts, trigger AI move only (do not mark any human move)
+            if self.game_mode == 'ai' and player == self.ai_symbol:
+                self.window.after(150, self.ai_move)
         button_frame = tk.Frame(main_frame, bg=self.colors['bg_primary'])
         button_frame.pack(pady=8)
         btn_width = 2
         btn_height = 1
         btn_padx = 10
-        # Use a smaller, matching font for both symbols
         base_font = self.fonts['symbol']
         symbol_font = tkfont.Font(family=base_font.actual('family'), size=36, weight=base_font.actual('weight'))
         x_button = tk.Button(
@@ -415,3 +455,12 @@ class TicTacToeUI:
         o_button.bind("<Leave>", hover_o_leave)
         selection_window.protocol("WM_DELETE_WINDOW", lambda: None)
         self.window.wait_window(selection_window)
+
+    def ai_move(self):
+        from src.game_logic.ai import get_ai_move
+        if self.game_over or not hasattr(self, 'ai_symbol'):
+            return
+        move = get_ai_move(self.board, self.ai_symbol, self.human_symbol)
+        if move:
+            row, col = move
+            self.handle_click(row, col)
