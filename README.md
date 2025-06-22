@@ -5,10 +5,10 @@ A classic game of Tic Tac Toe written in python using tkinter.
 # Preview
 
 <p align="center">
-  <img src="public/demo1.png" alt="Demo 1" width="600"/>
+  <img src="public/demo1.png" alt="Demo 1" width="250"/>
 </p>
 <p align="center">
-  <img src="public/demo2.png" alt="Demo 2" width="600"/>
+  <img src="public/demo2.png" alt="Demo 2" width="250"/>
 </p>
 
 ## How to play
